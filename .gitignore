@@ -1,7 +1,5 @@
 .vscode/
 
-venv
-
 *.code-workspace
 
 # **/settings.py
@@ -144,3 +142,4 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+polls/settings.py
