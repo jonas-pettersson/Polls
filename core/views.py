@@ -4,15 +4,17 @@ from django.urls import reverse
 from django.db.models import F
 
 from .models import Question, Choice
+from django.utils import timezone
 
 
-def index(request):
-    last_questions_list = Question.objects.order_by('-date_published')[:5]
+def polls_list(request):
+    last_questions_list = Question.objects.filter(
+        date_published__lte=timezone.now()).order_by('-date_published')[:5]
     context = {'last_questions_list': last_questions_list}
     return render(request, 'core/polls_list.html', context)
 
 
-def detail(request, pk):
+def poll_detail(request, pk):
     question = get_object_or_404(Question, pk=pk)
     return render(request, 'core/poll_detail.html', {'question': question})
 
@@ -35,6 +37,6 @@ def vote(request, pk):
         return HttpResponseRedirect(reverse('core:poll_result', args=(question.id,)))
 
 
-def results(request, pk):
+def poll_result(request, pk):
     question = get_object_or_404(Question, pk=pk)
     return render(request, 'core/poll_result.html', {'question': question})
