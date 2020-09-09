@@ -56,10 +56,6 @@ class QuestionPollsListTests(TestCase):
         self.assertQuerysetEqual(response.context['last_questions_list'], [])
 
     def test_question_with_pub_date_in_the_past_are_displayed_future_not(self):
-        """
-        Even if both past and future questions exist, only past questions
-        are displayed.
-        """
         create_question(question_text="Past question.", offset_days=-30)
         create_question(question_text="Future question.", offset_days=30)
         response = self.client.get(reverse('core:polls_list'))
@@ -68,12 +64,25 @@ class QuestionPollsListTests(TestCase):
             ['<Question: Past question.>'])
 
     def test_multiple_questions_are_displayed(self):
-        """
-        The questions page may display multiple questions.
-        """
         create_question(question_text="Past question 1.", offset_days=-30)
         create_question(question_text="Past question 2.", offset_days=-5)
         response = self.client.get(reverse('core:polls_list'))
         self.assertQuerysetEqual(
             response.context['last_questions_list'],
             ['<Question: Past question 2.>', '<Question: Past question 1.>'])
+
+
+class QuestionDetailViewTests(TestCase):
+    def test_detail_of_future_question_returns_404(self):
+        future_question = create_question(
+            question_text='Future question.', offset_days=5)
+        url = reverse('core:poll_detail', args=(future_question.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_detail_of_past_question_displays_question_text(self):
+        past_question = create_question(
+            question_text='Past Question.', offset_days=-5)
+        url = reverse('core:poll_detail', args=(past_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, past_question.question_text)
