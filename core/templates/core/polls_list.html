@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div class="w3-container w3-blue">
+        <h1>Polls List</h1>
+    </div>
+    <div class="w3-container">
+        {% if last_questions_list %}
+            <ul class="w3-ul">
+            {% for q in last_questions_list %}
+                <li><a href="{% url 'core:detail' q.id %}">{{ q.question_text }}</a></li> 
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No polls are available.</p>
+        {% endif %}
+    </div>
+{% endblock content %}
