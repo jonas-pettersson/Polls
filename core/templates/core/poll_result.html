@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="w3-container w3-pale-yellow">
+    <h1>Results for: {{ question.question_text }}</h1>
+</div>
+<div class="w3-container">
+
+    <ul class="w3-ul">
+        {% for choice in question.choice_set.all %}
+            <li class="w3-hover-light-grey">{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="w3-container">
+    <p><a href="{% url 'core:poll_detail' question.id %}">Vote again?</a></p>
+</div>
+
+{% endblock content %}

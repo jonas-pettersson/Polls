@@ -8,7 +8,7 @@
         {% if last_questions_list %}
             <ul class="w3-ul">
             {% for q in last_questions_list %}
-                <li><a href="{% url 'core:detail' q.id %}">{{ q.question_text }}</a></li> 
+                <li><a href="{% url 'core:poll_detail' q.id %}">{{ q.question_text }}</a></li> 
             {% endfor %}
             </ul>
         {% else %}

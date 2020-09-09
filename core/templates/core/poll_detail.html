@@ -2,9 +2,15 @@
 
 {% block content %}
 <div class="w3-container w3-pale-yellow">
-    <h1>{{ question.question_text }}</h1>
+    <h1>Poll for: {{ question.question_text }}</h1>
 </div>
 <div class="w3-container">
+
+    {% if error_message  %}
+        <div class="w3-panel w3-red">
+            <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
 
     <form class="w3-container" action="{% url 'core:vote' question.id %}" method="post">
     {% csrf_token %}
@@ -13,7 +19,7 @@
             <ul class="w3-ul">
                 {% for choice in question.choice_set.all %}
                     <li class="w3-hover-light-grey">
-                        <input class="w3-radio" type="radio" name="choice" id="choice{{ forloop.counter }}" value={{ forloop.counter }}>
+                        <input class="w3-radio" type="radio" name="choice" id="choice{{ forloop.counter }}" value={{ choice.id }}>
                         <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
                     </li>
                 {% endfor %}
