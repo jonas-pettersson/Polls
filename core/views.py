@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Question, Choice
 from django.urls import reverse
+from django.db.models import F
+
+from .models import Question, Choice
 
 
 def index(request):
@@ -26,7 +28,8 @@ def vote(request, pk):
             'error_message': 'You didn\'t select a choice.'
         })
     else:
-        selected_choice.votes += 1
+        # F() has the database - rather than Python - update a field’s value, avoiding a race condition.
+        selected_choice.votes = F('votes') + 1
         selected_choice.save()
         # Return an HttpResponseRedirect
         return HttpResponseRedirect(reverse('core:poll_result', args=(question.id,)))
