@@ -6,10 +6,22 @@
 </div>
 <div class="w3-container">
 
-    <ul class="w3-ul">
-        {% for choice in question.choice_set.all %}
-            <li>{{ choice.choice_text }}</li>
-        {% endfor %}
-    </ul>
+    <form class="w3-container" action="{% url 'core:vote' question.id %}" method="post">
+    {% csrf_token %}
+
+        <fieldset class="form-group w3-border-0">
+            <ul class="w3-ul">
+                {% for choice in question.choice_set.all %}
+                    <li class="w3-hover-light-grey">
+                        <input class="w3-radio" type="radio" name="choice" id="choice{{ forloop.counter }}" value={{ forloop.counter }}>
+                        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                    </li>
+                {% endfor %}
+                    <li>
+                        <button class="w3-button w3-green" type="submit">Vote</button>
+                    </li>
+            </ul>
+        </fieldset>
+    </form>
 </div>
 {% endblock content %}
