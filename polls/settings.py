@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(
-    'DJANGO_SECRET_KEY','f4p$il))7q55pvi39b8#@5af@y&--)p5$6axtr+pi3@7=784c=')
+    'DJANGO_SECRET_KEY', 'f4p$il))7q55pvi39b8#@5af@y&--)p5$6axtr+pi3@7=784c=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG_VALUE', '') != 'False'
@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'polls',
-        'USER': os.environ.get('DJANGO_POSTGRES_USER','admin'),
-        'PASSWORD': os.environ.get('DJANGO_POSTGRES_PASSWORD',''),
+        'USER': os.environ.get('DJANGO_POSTGRES_USER', 'admin'),
+        'PASSWORD': os.environ.get('DJANGO_POSTGRES_PASSWORD', ''),
     },
     'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'CET'
 
 USE_I18N = True
 
